@@ -1,24 +1,36 @@
 #!/usr/bin/node
+#!/usr/bin/node
 const request = require('request');
 
 const movieId = process.argv[2];
+const apiUrl = `https://swapi-api.hbtn.io/api/films/${movieId}/`;
+
 if (!movieId) {
-  console.error('Usage: node script.js <movie_id>');
+  console.error('Usage: ./script.js <movie_id>');
   process.exit(1);
 }
 
-const apiUrl = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
+request(apiUrl, (err, _, body) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
 
-request(apiUrl, (err, res, body) => {
-  if (err) return console.error(err);
-  const film = JSON.parse(body);
-  const characters = film.characters;
+  const characters = JSON.parse(body).characters;
+  const results = [];
+  let count = 0;
 
-  characters.forEach(url => {
-    request(url, (err, res, body) => {
-      if (!err) {
-        const character = JSON.parse(body);
-        console.log(character.name);
+  characters.forEach((url, index) => {
+    request(url, (charErr, __, charBody) => {
+      if (charErr) {
+        console.error(charErr);
+        return;
+      }
+      results[index] = JSON.parse(charBody).name;
+      count++;
+
+      if (count === characters.length) {
+        results.forEach(name => console.log(name));
       }
     });
   });

@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""Task 0
+"""
 
 
 def island_perimeter(grid):

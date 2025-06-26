@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""Task 0
+"""
 
 
 def is_prime_sieve(n):
@@ -8,7 +10,8 @@ def is_prime_sieve(n):
         n (int): The upper limit of the sieve.
 
     Returns:
-        List[bool]: A list where index i is True if i is a prime, False otherwise.
+        List[bool]: A list where index i is True if i is a prime, False
+        otherwise.
     """
     sieve = [False, False] + [True] * (n - 1)
     for i in range(2, int(n ** 0.5) + 1):
